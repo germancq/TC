@@ -19,3 +19,6 @@ pip3 install --user pyserial
 pip3 install --user matplotlib
 pip3 install --user numpy
 
+#uninstall brltty
+
+sudo apt remove brltty
