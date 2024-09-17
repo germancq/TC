@@ -24,7 +24,7 @@ charge_time_init = 0
 voltaje = collections.deque(np.zeros(10))
 tiempo = collections.deque(np.zeros(10))
 
-comando = 'read'
+comando = 'r'
 estado = 'descarga'
 
 
@@ -38,7 +38,7 @@ def readlinefromArduino(self):
 		arduino.write(str.encode(comando))
 		arduino.flush()
 		
-		comando = 'read'
+		comando = 'r'
 		
 		line = arduino.readline()
 		print(line)
@@ -74,7 +74,7 @@ class capacitorMode:
 
 	def carga(self,event):
 		global comando
-		comando = 'carga'
+		comando = 'c'
 		global charge_time_init
 		charge_time_init = time.time()
 		global estado
@@ -84,7 +84,7 @@ class capacitorMode:
 	def descarga(self,event):
 		global comando
 		global estado
-		comando = 'descarga'
+		comando = 'd'
 		estado = 'descarga'
 		
 

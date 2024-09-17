@@ -9,6 +9,8 @@
 #define DESCARGA 1
 #define CARGA 0
 
+#define VCC 3.3
+
 StaticJsonDocument<256> doc;
 
 String str = "";
@@ -24,6 +26,8 @@ void setup() {
 
 // the loop function runs over and over again forever
 void loop() {
+  //lectura_condensador(initial_time);
+
   if(Serial.available() > 0){
     read_from_python();
   }
@@ -31,18 +35,21 @@ void loop() {
 
 void read_from_python(){
    str = Serial.readString();
-   if(str == "carga"){
-        digitalWrite(5,HIGH);
+   //Serial.println(str);
+   if(str.equals("c")){
+    //Serial.println("opcion A");
+    digitalWrite(5,HIGH);
 
     conf_carga();
    }
-   else if(str == "descarga"){  
+   else if(str.equals("d")){  
+    //Serial.println("opcion b");
     conf_descarga();
    }
-   else if(str == "read"){
+   else if(str.equals("r")){
+    //Serial.println("opcion C");
     lectura_condensador(initial_time);
    }
-   
 
 }
 
@@ -70,7 +77,7 @@ void conf_carga(){
 float lectura_condensador(float initial_time){
   int lectura_analogica = analogRead(pin_Condensador);
   float current_time = millis() - initial_time;
-  float vc = (lectura_analogica / 1023.0) * 5.0;
+  float vc = (lectura_analogica / 1023.0) * VCC;
   //envio del valor por puerto serie
   doc["vc"] = vc;
   doc["time"] = current_time/1000.0;
